@@ -5,7 +5,6 @@ using namespace std;
 
 int main() {
     string s;
-    cout << "Enter a phrase: ";
     getline(cin, s);
     string prev = "";
     for (unsigned int i=0; i<s.length(); i++) {
