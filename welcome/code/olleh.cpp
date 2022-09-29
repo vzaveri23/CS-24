@@ -8,7 +8,7 @@ int main() {
     getline(cin, s);
     string prev = "";
     for (unsigned int i=0; i<s.length(); i++) {
-        if (s[i] == ' ' || ispunct(s[i])) {
+        if (isspace(s[i]) || ispunct(s[i])) {
             for (int j=prev.length()-1; j>=0; j--) {
                 cout << prev[j];
             }
