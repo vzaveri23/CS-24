@@ -8,9 +8,9 @@ int main() {
     cout << "Enter a phrase: ";
     getline(cin, s);
     string prev = "";
-    for (int i=0; i<s.size(); i++) {
+    for (int i=0; i<s.length(); i++) {
         if (s[i] == ' ' || ispunct(s[i])) {
-            for (int j=prev.size()-1; j>=0; j--) {
+            for (int j=prev.length()-1; j>=0; j--) {
                 cout << prev[j];
             }
             prev = "";
@@ -21,7 +21,7 @@ int main() {
 
     }
 
-    for (int k=prev.size()-1; k>=0; k--) {
+    for (int k=prev.length()-1; k>=0; k--) {
         cout << prev[k];
     }
 
