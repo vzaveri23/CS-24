@@ -61,7 +61,7 @@ int FibVec::pop() {
 }
 
 void FibVec::push(int val) {
-    insert(count(), val);
+    insert(val, count());
 }
 
 int FibVec::remove(size_t index) { 
@@ -104,6 +104,12 @@ void FibVec::resize(size_t size) {
 
     delete [] arr;
     arr = new_arr;
+}
+
+void FibVec::display() {
+    for (size_t i=0; i<count(); i++) {
+        cout << arr[i] << endl;
+    }
 }
 
 
