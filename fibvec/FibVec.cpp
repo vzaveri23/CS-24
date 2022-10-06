@@ -87,6 +87,10 @@ int FibVec::remove(size_t index) {
 
 FibVec FibVec::slice(size_t index, size_t c) const {
     FibVec *fib = new FibVec;
+    for (size_t i=index; i<(index+c); i++) {
+
+    }
+
     return *fib;
 }
 
