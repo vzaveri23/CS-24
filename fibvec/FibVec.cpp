@@ -85,9 +85,10 @@ int FibVec::remove(size_t index) {
     return remove_val;
 }
 
-// FibVec FibVec::slice(size_t index, size_t c) const {
-
-// }
+FibVec FibVec::slice(size_t index, size_t c) const {
+    FibVec *fib = new FibVec;
+    return *fib;
+}
 
 void FibVec::resize(size_t size) {
     int *new_arr = new int[size];
