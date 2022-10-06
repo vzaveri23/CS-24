@@ -36,8 +36,8 @@ void FibVec::insert(int val, size_t index) {
         current_cap = new_capacity;
     }
 
-    for (size_t i=count()-1; i>=index; i--) {
-        arr[i+1] = arr[i];
+    for (size_t i=count(); i>index; i--) {
+        arr[i] = arr[i-1];
     }
 
     arr[index] = val;
@@ -81,6 +81,8 @@ int FibVec::remove(size_t index) {
     if (count() < (current_cap-prev_cap)) {
         resize(prev_cap);
     }
+
+
 
     return remove_val;
 }
