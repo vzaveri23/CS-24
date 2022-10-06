@@ -11,13 +11,15 @@ class FibVec {
        size_t prev_cap;
        size_t current_cap;
     public:
+        FibVec();
+        ~FibVec();
         size_t capacity() const;
         size_t count() const;
-        void insert(int, size_t) throw();
-        int lookup(size_t) const throw();
-        int pop() throw();
+        void insert(int, size_t);
+        int lookup(size_t) const;
+        int pop();
         void push(int);
-        int remove(size_t) throw();
+        int remove(size_t);
         FibVec slice(size_t, size_t) const;
         void resize(size_t);
 
