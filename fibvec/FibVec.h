@@ -20,7 +20,7 @@ class FibVec {
         int pop();
         void push(int);
         int remove(size_t);
-        // FibVec slice(size_t, size_t) const;
+        FibVec slice(size_t, size_t) const;
         void resize(size_t);
 
 };
