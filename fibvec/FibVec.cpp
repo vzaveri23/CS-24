@@ -106,11 +106,6 @@ void FibVec::resize(size_t size) {
     arr = new_arr;
 }
 
-void FibVec::display() {
-    for (size_t i=0; i<count(); i++) {
-        cout << arr[i] << endl;
-    }
-}
 
 
 
