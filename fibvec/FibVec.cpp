@@ -26,8 +26,7 @@ size_t FibVec::count() const {
 
 void FibVec::insert(int val, size_t index) {
     if (index > count()) {
-        // throw std::out_of_range("invalid index");
-        cout << "size is too big" << endl;
+        throw out_of_range("invalid index");
     }
 
     if (count() == capacity()) {
