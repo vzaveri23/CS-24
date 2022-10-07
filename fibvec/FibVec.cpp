@@ -71,14 +71,13 @@ int FibVec::remove(size_t index) {
         arr[i] = arr[i+1];
     }
 
-    size_t temp_capacity = current_cap;
-    current_cap = prev_cap;
-    prev_cap = temp_capacity - prev_cap;
-
     numVals--;
 
-    if (count() < (prev_cap)) {
+    if (count() < (current_cap-prev_cap)) {
         resize(prev_cap);
+        size_t temp = current_cap;
+        current_cap = prev_cap;
+        prev_cap = temp - prev_cap;
     }
 
     return remove_val;
