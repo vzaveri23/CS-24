@@ -27,7 +27,6 @@ size_t FibVec::count() const {
 void FibVec::insert(int val, size_t index) {
     if (index > count()) {
         throw out_of_range("invalid index");
-        exit(1);
     }
 
     if (count() == capacity()) {
@@ -56,7 +55,6 @@ int FibVec::lookup(size_t index) const {
 int FibVec::pop() {
     if (count() == 0) {
         throw underflow_error("invalid");
-        exit(1);
     }
     
     return remove(count()-1);
@@ -67,6 +65,10 @@ void FibVec::push(int val) {
 }
 
 int FibVec::remove(size_t index) { 
+    if (index > count()) {
+        throw out_of_range("invalid index");
+    }
+
     int remove_val = lookup(index);
 
     for (size_t i=index; i<count(); i++) {
@@ -93,6 +95,12 @@ void FibVec::resize(size_t size) {
 
     delete [] arr;
     arr = new_arr;
+}
+
+void FibVec::display() {
+    for (int i=0; i<capacity(); i++) {
+        cout << arr[i] << " ";
+    }
 }
 
 
