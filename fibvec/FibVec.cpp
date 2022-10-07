@@ -54,10 +54,11 @@ int FibVec::lookup(size_t index) const {
 
 int FibVec::pop() {
     if (count() == 0) {
-        throw underflow_error("invalid");
+        throw underflow_error("invalid: empty");
     }
     
-    return remove(count()-1);
+    int remove_val = remove(count()-1);
+    return remove_val;
 }
 
 void FibVec::push(int val) {
@@ -65,7 +66,7 @@ void FibVec::push(int val) {
 }
 
 int FibVec::remove(size_t index) { 
-    if (index > count()) {
+    if (index >= count()) {
         throw out_of_range("invalid index");
     }
 
