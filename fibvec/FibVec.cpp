@@ -65,24 +65,21 @@ void FibVec::push(int val) {
 }
 
 int FibVec::remove(size_t index) { 
-    if (index >= count()) {
-        throw out_of_range("invalid index");
-    }
+    int remove_val = lookup(index);
 
-    int remove_val = arr[index];
-
-    //condition may be i<count()-1
     for (size_t i=index; i<count(); i++) {
         arr[i] = arr[i+1];
     }
+
+    size_t temp_capacity = current_cap;
+    current_cap = prev_cap;
+    prev_cap = temp_capacity - prev_cap;
 
     numVals--;
 
     if (count() < (current_cap-prev_cap)) {
         resize(prev_cap);
     }
-
-
 
     return remove_val;
 }
