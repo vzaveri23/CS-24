@@ -77,20 +77,11 @@ int FibVec::remove(size_t index) {
 
     numVals--;
 
-    if (count() < (current_cap-prev_cap)) {
+    if (count() < (prev_cap)) {
         resize(prev_cap);
     }
 
     return remove_val;
-}
-
-FibVec FibVec::slice(size_t index, size_t c) const {
-    FibVec *fib = new FibVec;
-    for (size_t i=index; i<(index+c); i++) {
-
-    }
-
-    return *fib;
 }
 
 void FibVec::resize(size_t size) {
