@@ -66,13 +66,9 @@ void FibVec::push(int val) {
 }
 
 int FibVec::remove(size_t index) { 
-    if (index >= count()) {
-        throw out_of_range("invalid index");
-    }
-
     int remove_val = lookup(index);
 
-    for (size_t i=index; i<count(); i++) {
+    for (size_t i=index; i<count()-1; i++) {
         arr[i] = arr[i+1];
     }
 
@@ -96,6 +92,12 @@ void FibVec::resize(size_t size) {
 
     delete [] arr;
     arr = new_arr;
+}
+
+void FibVec::display() {
+    for (int i=0; i<capacity(); i++) {
+        cout << *(arr+i) <<  " ";
+    }
 }
 
 
