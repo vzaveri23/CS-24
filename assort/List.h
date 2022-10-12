@@ -14,7 +14,7 @@ struct Node {
 
 
 class List {
-  Node *head;
+  Node* head;
 
 public:
   List();
