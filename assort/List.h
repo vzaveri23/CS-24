@@ -9,12 +9,12 @@
 
 struct Node {
   std::string data;
-  Node*       next;
+  Node *next;
 };
 
 
 class List {
-  Node* head;
+  Node *head;
 
 public:
   List();
