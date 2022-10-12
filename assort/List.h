@@ -9,7 +9,7 @@
 
 struct Node {
   std::string data;
-  Node *next;
+  Node*       next;
 };
 
 
