@@ -94,15 +94,13 @@ void List::print(bool reverse) const {
         cout << "[";
         while (ptr) {
             if (ptr->next == nullptr) {
-                cout << ptr->data << "]";
+                cout << ptr->data << "]" << endl;
                 return;
             }
             cout << ptr->data << ", ";
             ptr = ptr->next;
         }
-    } else {
-
-    }
+    } 
     
     cout << endl;
 }
