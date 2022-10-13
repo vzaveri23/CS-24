@@ -95,7 +95,7 @@ void List::print(bool reverse) const {
         while (ptr) {
             if (ptr->next == nullptr) {
                 cout << ptr->data;
-                return;
+                break;
             }
             cout << ptr->data << ", ";
             ptr = ptr->next;
