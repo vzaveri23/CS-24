@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+void reversePrint(Node*);
+
 List::List() {
     head = nullptr;
 }
@@ -88,6 +90,11 @@ const string &List::lookup(size_t index) const {
 }
 
 void List::print(bool reverse) const {
+    if (head == nullptr) {
+        cout << "[]" << endl;
+        return;
+    }
+
     if (!reverse) {
         Node *ptr;
         ptr = head;
@@ -100,7 +107,10 @@ void List::print(bool reverse) const {
             cout << ptr->data << ", ";
             ptr = ptr->next;
         }
-    } 
+    } else {
+        cout << "[";
+        reversePrint(head);
+    }
     
     cout << "]" << endl;
 }
@@ -174,6 +184,20 @@ size_t List::remove(const string &value) {
 
     return count;
 
+}
+
+void reversePrint(Node *head) {
+    if (head == nullptr) {
+        return;
+    }
+
+    reversePrint(head->next);
+    if (head->next != nullptr) {
+       cout << ", ";
+    }
+    
+    cout << head->data;
+    
 }
 
 
