@@ -154,7 +154,7 @@ size_t List::remove(const string &value) {
     prev_ptr = nullptr;
 
     if (ptr->data == value) {
-        while (ptr->data == value) {
+        while (ptr != nullptr && ptr->data == value) {
             Node *temp = ptr;
             ptr = ptr->next;
             count++;
