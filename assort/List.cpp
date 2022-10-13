@@ -94,7 +94,7 @@ void List::print(bool reverse) const {
         cout << "[";
         while (ptr) {
             if (ptr->next == nullptr) {
-                cout << ptr->data << "]" << endl;
+                cout << ptr->data;
                 return;
             }
             cout << ptr->data << ", ";
@@ -102,7 +102,7 @@ void List::print(bool reverse) const {
         }
     } 
     
-    cout << endl;
+    cout << "]" << endl;
 }
 
 string List::remove(size_t index) {
