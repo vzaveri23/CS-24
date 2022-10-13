@@ -167,10 +167,10 @@ size_t List::remove(const string &value) {
 
     while (ptr) {
         if (ptr->data == value) {
-            while (ptr->data == value) {
-                Node *valPtr = ptr;
+            while (ptr != nullptr && ptr->data == value) {
+                Node *temp = ptr;
                 ptr = ptr->next;
-                delete valPtr;
+                delete temp;
                 count++;
                 prev_ptr->next=ptr;
             }
@@ -195,7 +195,7 @@ void reversePrint(Node *head) {
     if (head->next != nullptr) {
        cout << ", ";
     }
-    
+
     cout << head->data;
     
 }
