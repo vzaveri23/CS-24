@@ -100,6 +100,8 @@ void printer(Node *ptr) {
         printer(ptr->right);
         cout << ")";
     }
+
+    cout << endl;
 }
 
 size_t Set::remove(const string &value) {
