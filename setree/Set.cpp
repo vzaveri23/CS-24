@@ -79,7 +79,7 @@ const string &Set::lookup(size_t n) const {
 
     }
 
-    return mRoot->data;
+    return ptr->data;
 }
 
 void Set::print() const {
