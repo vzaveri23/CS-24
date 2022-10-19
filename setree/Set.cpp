@@ -74,7 +74,12 @@ size_t Set::insert(const string &value) {
 }
 
 const string &Set::lookup(size_t n) const {
+    Node *ptr = mRoot;
+    if (n < count()) {
 
+    }
+
+    return mRoot->data;
 }
 
 void Set::print() const {
