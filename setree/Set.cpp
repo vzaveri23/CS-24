@@ -65,8 +65,7 @@ size_t Set::insert(const string &value) {
         return 0;
     }
 
-    Node *newNode = nullptr;
-    newNode = new Node;
+    Node *newNode = new Node;
     newNode->data = value;
     newNode->left = newNode->right = nullptr;
 
