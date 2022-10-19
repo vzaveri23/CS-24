@@ -84,6 +84,7 @@ const string &Set::lookup(size_t n) const {
 
 void Set::print() const {
     printer(mRoot);
+    cout << endl;
 }
 
 void printer(Node *ptr) {
@@ -100,8 +101,6 @@ void printer(Node *ptr) {
         printer(ptr->right);
         cout << ")";
     }
-
-    cout << endl;
 }
 
 size_t Set::remove(const string &value) {
