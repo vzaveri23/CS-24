@@ -7,6 +7,7 @@ size_t place(Node *&, Node *&);
 size_t countNodes(Node *);
 size_t deleteNode(string, Node *&);
 void deletion(Node *&);
+void printer(Node *);
 
 Set::Set() {
     mRoot = nullptr;
@@ -77,7 +78,23 @@ const string &Set::lookup(size_t n) const {
 }
 
 void Set::print() const {
+    printer(mRoot);
+}
 
+void printer(Node *ptr) {
+    if (ptr == nullptr) {
+        cout << "-";
+    } else if (ptr->left == nullptr && ptr->right == nullptr) {
+        cout << ptr->data;
+    } else {
+        cout << "(";
+        printer(ptr->left);
+        cout << " ";
+        cout << ptr->data;
+        cout << " ";
+        printer(ptr->right);
+        cout << ")";
+    }
 }
 
 size_t Set::remove(const string &value) {
@@ -85,7 +102,7 @@ size_t Set::remove(const string &value) {
         return 0;
     }
 
-    deleteNode(value, mRoot);
+   return deleteNode(value, mRoot);
 
 }
 
