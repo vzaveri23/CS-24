@@ -34,6 +34,7 @@ size_t Set::clear() {
     }
 
     deleteNode(mRoot);
+    mRoot = nullptr;
     return val;
 }
 
