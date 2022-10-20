@@ -102,9 +102,10 @@ Node* look(Node *ptr, size_t n) {
         return ptr;
     } else if (n < countNodes(ptr->left)) {
         return look(ptr->left, n);
-    } else if (n > countNodes(ptr->left)) {
-        return look(ptr->right, n-(countNodes(ptr->left) + 1));
-    }
+    } 
+    
+    
+    return look(ptr->right, n-(countNodes(ptr->left) + 1));
 
 }
 
