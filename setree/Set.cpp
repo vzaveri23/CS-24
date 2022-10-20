@@ -9,6 +9,7 @@ size_t deleteNode(string, Node *&);
 void deletion(Node *&);
 void printer(Node *);
 void deleteNode(Node *);
+Node* look(Node *, size_t);
 
 Set::Set() {
     mRoot = nullptr;
@@ -87,12 +88,23 @@ size_t Set::insert(const string &value) {
 }
 
 const string &Set::lookup(size_t n) const {
-    Node *ptr = mRoot;
-    if (n < count()) {
+    Node *temp = nullptr;
+    temp = look(mRoot, n);
+    return temp->data;
+}
 
+Node* look(Node *ptr, size_t n) {
+    if (n >= countNodes(ptr)) {
+        throw out_of_range("invalid");
+    } 
+    
+    if (n == countNodes(ptr->left)) {
+        return ptr;
+    } else if (n < countNodes(ptr->left)) {
+        return look(ptr->left, n);
+    } else if (n > countNodes(ptr->left)) {
+        return look(ptr->right, n-(countNodes(ptr->left) + 1));
     }
-
-    return ptr->data;
 
 }
 
