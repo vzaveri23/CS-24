@@ -8,6 +8,7 @@ size_t countNodes(Node *);
 size_t deleteNode(string, Node *&);
 void deletion(Node *&);
 void printer(Node *);
+void deleteNode(Node *);
 
 Set::Set() {
     mRoot = nullptr;
@@ -28,11 +29,23 @@ Set::~Set() {
 
 size_t Set::clear() {
     size_t val = count();
+    if (mRoot == nullptr) {
+        return 0;
+    }
 
-
-
-
+    deleteNode(mRoot);
     return val;
+}
+
+void deleteNode(Node *ptr) {
+    if (ptr == nullptr) {
+        return;
+    }
+
+    deleteNode(ptr->left);
+    deleteNode(ptr->right);
+
+    delete ptr;
 }
 
 bool Set::contains(const string& value) const {
