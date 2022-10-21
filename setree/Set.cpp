@@ -17,16 +17,15 @@ Set::Set() {
 }
 
 Set::Set(const Set& other) {
-    if (other.mRoot == nullptr) {
-        mRoot = nullptr;
-        return;
-    }
-
     copy(mRoot, other.mRoot);
-
 }
 
 void copy(Node *&ptr, Node *other) {
+    if (other == nullptr) {
+        ptr = nullptr;
+        return;
+    }
+    
     ptr = new Node;
     ptr->data = other->data;
     copy(ptr->left, other->left);
