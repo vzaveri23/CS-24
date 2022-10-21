@@ -10,13 +10,27 @@ void deletion(Node *&);
 void printer(Node *);
 void deleteNode(Node *);
 Node* look(Node *, size_t);
+void copy(Node *&, Node *);
 
 Set::Set() {
     mRoot = nullptr;
 }
 
 Set::Set(const Set& other) {
+    if (other.mRoot == nullptr) {
+        mRoot = nullptr;
+        return;
+    }
 
+    copy(mRoot, other.mRoot);
+
+}
+
+void copy(Node *&ptr, Node *other) {
+    ptr = new Node;
+    ptr->data = other->data;
+    copy(ptr->left, other->left);
+    copy(ptr->right, other->right);
 }
 
 Set::Set(Set&& other) {
@@ -103,7 +117,6 @@ Node* look(Node *ptr, size_t n) {
     } else if (n < countNodes(ptr->left)) {
         return look(ptr->left, n);
     } 
-    
     
     return look(ptr->right, n-(countNodes(ptr->left) + 1));
 
