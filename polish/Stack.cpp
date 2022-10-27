@@ -11,6 +11,7 @@ Stack::~Stack() {
     ptr = top;
     while (ptr) {
         nextNode = ptr->next;
+        delete ptr->data;
         delete ptr;
         ptr = nextNode;
     }
