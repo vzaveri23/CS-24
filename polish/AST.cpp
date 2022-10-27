@@ -71,7 +71,7 @@ AST* AST::parse(const std::string& expression) {
         throw runtime_error("No input.");
     } else if (stack.size() > 1) {
         throw runtime_error("Too many operands.");
-    } else if (operands <= operators) {
+    } else if (operands < operators) {
         throw runtime_error("Not enough operands.");
     }
 
