@@ -38,7 +38,7 @@ AST* AST::parse(const std::string& expression) {
                 stack.push(ptr);
                 operators++;
             } else {
-                throw runtime_error("Not enough operands");
+                throw runtime_error("Not enough operands.");
             }
         } else if (t == "*") {
             if (stack.size() > 1) {
