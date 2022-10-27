@@ -85,5 +85,5 @@ Numbers* numberParser(string token) {
         return nullptr;
     }
 
-    return new Numbers(stod(token));
+    return new Numbers(t);
 }
