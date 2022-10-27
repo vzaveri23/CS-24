@@ -97,7 +97,7 @@ AST* AST::parse(const std::string& expression) {
         throw runtime_error("Too many operands.");
     }
 
-    return stack.topNode()->data;
+    return stack.pop();
 }
 
 Numbers* numberParser(string token) {
