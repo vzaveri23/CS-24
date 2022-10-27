@@ -21,7 +21,7 @@ AST* AST::parse(const std::string& expression) {
     string line;
     while (iss >> t) {
         if (t == "+") {
-            if (stack.size() > 2) {
+            if (stack.size() > 1) {
                 AST *first = stack.pop();
                 AST *second = stack.pop();
                 Addition *ptr = new Addition(second, first);
@@ -31,17 +31,17 @@ AST* AST::parse(const std::string& expression) {
                 throw runtime_error("Not enough operands.");
             }
         } else if (t == "-") {
-            if (stack.size() > 2) {
+            if (stack.size() > 1) {
                 AST *first = stack.pop();
                 AST *second = stack.pop();
                 Subtraction *ptr = new Subtraction(second, first);
                 stack.push(ptr);
                 operators++;
             } else {
-                throw runtime_error("Not enough operands.");
+                throw runtime_error("Not enough operands");
             }
         } else if (t == "*") {
-            if (stack.size() > 2) {
+            if (stack.size() > 1) {
                 AST *first = stack.pop();
                 AST *second = stack.pop();
                 Multiplication *ptr = new Multiplication(second, first);
@@ -51,7 +51,7 @@ AST* AST::parse(const std::string& expression) {
                 throw runtime_error("Not enough operands.");
             }
         } else if (t == "/") {
-            if (stack.size() > 2) {
+            if (stack.size() > 1) {
                 AST *first = stack.pop();
                 AST *second = stack.pop();
                 Division *ptr = new Division(second, first);
@@ -61,7 +61,7 @@ AST* AST::parse(const std::string& expression) {
                 throw runtime_error("Not enough operands.");
             }
         }  else if (t == "%") {
-            if (stack.size() > 2) {
+            if (stack.size() > 1) {
                 AST *first = stack.pop();
                 AST *second = stack.pop();
                 Mod *ptr = new Mod(second, first);
@@ -71,7 +71,7 @@ AST* AST::parse(const std::string& expression) {
                 throw runtime_error("Not enough operands.");
             }
         } else if (t == "~") {
-            if (stack.size() > 1) {
+            if (stack.size() >= 1) {
                 AST *val = stack.pop();
                 Negate *ptr = new Negate(val);
                 stack.push(ptr);
@@ -95,8 +95,6 @@ AST* AST::parse(const std::string& expression) {
         throw runtime_error("No input.");
     } else if (stack.size() > 1) {
         throw runtime_error("Too many operands.");
-    } else if (operands < operators) {
-        throw runtime_error("Not enough operands.");
     }
 
     return stack.topNode()->data;
