@@ -102,7 +102,12 @@ AST* AST::parse(const std::string& expression) {
 
 Numbers* numberParser(string token) {
     size_t idx;
-    double t = stod(token, &idx);
+    double t;
+    try {
+       t = stod(token, &idx);
+    } catch (...) {
+        throw runtime_error("Invalid token: " + token);
+    }
     if (token.size() != idx) {
         return nullptr;
     }
