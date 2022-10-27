@@ -21,40 +21,64 @@ AST* AST::parse(const std::string& expression) {
     string line;
     while (iss >> t) {
         if (t == "+") {
-            AST *first = stack.pop();
-            AST *second = stack.pop();
-            Addition *ptr = new Addition(second, first);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 2) {
+                AST *first = stack.pop();
+                AST *second = stack.pop();
+                Addition *ptr = new Addition(second, first);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         } else if (t == "-") {
-            AST *first = stack.pop();
-            AST *second = stack.pop();
-            Subtraction *ptr = new Subtraction(second, first);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 2) {
+                AST *first = stack.pop();
+                AST *second = stack.pop();
+                Subtraction *ptr = new Subtraction(second, first);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         } else if (t == "*") {
-            AST *first = stack.pop();
-            AST *second = stack.pop();
-            Multiplication *ptr = new Multiplication(second, first);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 2) {
+                AST *first = stack.pop();
+                AST *second = stack.pop();
+                Multiplication *ptr = new Multiplication(second, first);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         } else if (t == "/") {
-            AST *first = stack.pop();
-            AST *second = stack.pop();
-            Division *ptr = new Division(second, first);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 2) {
+                AST *first = stack.pop();
+                AST *second = stack.pop();
+                Division *ptr = new Division(second, first);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         }  else if (t == "%") {
-            AST *first = stack.pop();
-            AST *second = stack.pop();
-            Mod *ptr = new Mod(second, first);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 2) {
+                AST *first = stack.pop();
+                AST *second = stack.pop();
+                Mod *ptr = new Mod(second, first);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         } else if (t == "~") {
-            AST *val = stack.pop();
-            Negate *ptr = new Negate(val);
-            stack.push(ptr);
-            operators++;
+            if (stack.size() > 1) {
+                AST *val = stack.pop();
+                Negate *ptr = new Negate(val);
+                stack.push(ptr);
+                operators++;
+            } else {
+                throw runtime_error("Not enough operands.");
+            }
         } else {
             Numbers *ptr = numberParser(t);
             if (ptr == nullptr) {
