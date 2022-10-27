@@ -42,7 +42,7 @@ Addition::~Addition() {
 }
 
 string Addition::prefix() const {
-    return "+ " + left->prefix() + " " + right->prefix() ;
+    return "+ " + left->prefix() + " " + right->prefix();
 }
 
 string Addition::postfix() const {
