@@ -31,11 +31,12 @@ void Stack::push(AST *ptr) {
 }
 
 AST* Stack::pop() {
-    AST *deleted = top->data;
     Node *nodePtr = nullptr;
     if (isEmpty()) {
         return nullptr;
     }
+
+    AST *deleted = top->data;
 
     nodePtr = top;
     top = top->next;
