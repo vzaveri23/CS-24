@@ -1,4 +1,5 @@
 #include "Person.h"
+#include <iostream>
 
 // Person Member Functions
 
@@ -228,23 +229,7 @@ set<Person*> Person::parents(PMod pmod) {
 set<Person*> Person::siblings(PMod pmod, SMod smod) {
     set<Person*> siblings;
     set<Person*> parents;
-    // if (pmod == PMod::PATERNAL) {
-    //     for (Person *ptr : vfather->children()) {
-    //         siblings.insert(ptr);
-    //     }
-    // } else if (pmod == PMod::MATERNAL) {
-    //     for (Person *ptr : vmother->children()) {
-    //         siblings.insert(ptr);
-    //     }
-    // } else {
-    //    for (Person *ptr : vfather->children()) {
-    //         siblings.insert(ptr);
-    //     }
-
-    //      for (Person *ptr : vmother->children()) {
-    //         siblings.insert(ptr);
-    //     }
-    // }
+    set<Person*> final;
 
     parents = this->parents(pmod);
     for (Person *parent : parents) {
@@ -255,19 +240,22 @@ set<Person*> Person::siblings(PMod pmod, SMod smod) {
 
     if (smod == SMod::FULL) {
         for (Person *ptr : siblings) {
-            if (!ptr->father() || ptr->father() != father() || !ptr->mother() || ptr->mother() != mother()) {
-                siblings.erase(ptr);
+            if (father() && ptr->father() == father() && mother() && ptr->mother() == mother()) {
+                final.insert(ptr);
             }
         }
     } else if (smod == SMod::HALF) {
         for (Person *ptr : siblings) {
-           if ((father() && father() == ptr->father()) != (mother() && mother() == ptr->mother()))
-                siblings.erase(ptr);
+           if ((father() && father() == ptr->father()) != (mother() && mother() == ptr->mother())) {
+                final.insert(ptr);
             }
+        }
+    } else {
+        final = siblings;
     }
 
-    siblings.erase(this);
-    return siblings;
+    final.erase(this);
+    return final;
 }
 
 set<Person*> Person::sisters(PMod pmod, SMod smod) {
