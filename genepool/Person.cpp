@@ -124,13 +124,21 @@ set<Person*> Person::granddaughters() {
 
 set<Person*> Person::grandfathers(PMod pmod) {
     set<Person*> grandfathers;
-    if (pmod == PMod::MATERNAL) {
-        grandfathers.insert(mother()->father());
-    } else if (pmod == PMod::PATERNAL) {
-        grandfathers.insert(father()->father());
-    } else {
-        grandfathers.insert(mother()->father());
-        grandfathers.insert(father()->father());
+    set<Person*> grandparents;
+    // if (pmod == PMod::MATERNAL) {
+    //     grandfathers.insert(mother()->father());
+    // } else if (pmod == PMod::PATERNAL) {
+    //     grandfathers.insert(father()->father());
+    // } else {
+    //     grandfathers.insert(mother()->father());
+    //     grandfathers.insert(father()->father());
+    // }
+
+    grandparents = this->grandparents(pmod);
+    for (Person *ptr : grandparents) {
+        if (ptr->gender() == Gender::MALE) {
+            grandfathers.insert(ptr);
+        }
     }
 
     return grandfathers;
@@ -138,13 +146,21 @@ set<Person*> Person::grandfathers(PMod pmod) {
 
 set<Person*> Person::grandmothers(PMod pmod) {
     set<Person*> grandmothers;
-    if (pmod == PMod::MATERNAL) {
-        grandmothers.insert(mother()->mother());
-    } else if (pmod == PMod::PATERNAL) {
-        grandmothers.insert(father()->mother());
-    } else {
-        grandmothers.insert(mother()->mother());
-        grandmothers.insert(father()->mother());
+    set<Person*> grandparents;
+    // if (pmod == PMod::MATERNAL) {
+    //     grandmothers.insert(mother()->mother());
+    // } else if (pmod == PMod::PATERNAL) {
+    //     grandmothers.insert(father()->mother());
+    // } else {
+    //     grandmothers.insert(mother()->mother());
+    //     grandmothers.insert(father()->mother());
+    // }
+
+    grandparents = this->grandparents(pmod);
+    for (Person *ptr : grandparents) {
+        if (ptr->gender() == Gender::FEMALE) {
+            grandmothers.insert(ptr);
+        }
     }
 
     return grandmothers;
@@ -152,8 +168,17 @@ set<Person*> Person::grandmothers(PMod pmod) {
 
 set<Person*> Person::grandparents(PMod pmod) {
     set<Person*> grandparents;
-    grandparents.merge(grandfathers(pmod));
-    grandparents.merge(grandmothers(pmod));
+    set<Person*> parents;
+
+    parents = this->parents(pmod);
+    for (Person *ptr : parents) {
+        if (ptr) {
+            grandparents.insert(ptr);
+        }
+    }
+    // grandparents.merge(grandfathers(pmod));
+    // grandparents.merge(grandmothers(pmod));
+    
     return grandparents;
 }
 
