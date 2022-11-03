@@ -14,7 +14,7 @@ GenePool::GenePool(istream &stream) {
         istringstream iss(line);
         string t;
         size_t count=0;
-        string name, g, m, f;
+        string name;
         Gender gender;
         Person *mother;
         Person *father;
@@ -58,8 +58,6 @@ GenePool::GenePool(istream &stream) {
         if (father) {
             father->addChild(ptr);
         }
-
-        cout << "current name: " << name << endl;
     }
 }
 
