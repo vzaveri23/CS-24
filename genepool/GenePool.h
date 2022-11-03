@@ -4,6 +4,7 @@
 #include "Person.h"
 
 #include <istream>
+#include <sstream>
 #include <string>
 #include <map>
 
@@ -13,6 +14,7 @@
 
 class GenePool {
   // Member Variables
+  map<string, Person*> people;
 
   // Helper Functions
 
