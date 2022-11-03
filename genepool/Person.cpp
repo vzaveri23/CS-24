@@ -169,11 +169,13 @@ set<Person*> Person::grandmothers(PMod pmod) {
 set<Person*> Person::grandparents(PMod pmod) {
     set<Person*> grandparents;
     set<Person*> parents;
-
+    
     parents = this->parents(pmod);
-    for (Person *ptr : parents) {
-        if (ptr) {
-            grandparents.insert(ptr);
+    for (Person *i : parents) {
+        for (Person *j : i->parents(PMod::ANY)) {
+            if (j) {
+                grandparents.insert(j);
+            }
         }
     }
     // grandparents.merge(grandfathers(pmod));
