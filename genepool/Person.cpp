@@ -125,14 +125,6 @@ set<Person*> Person::granddaughters() {
 set<Person*> Person::grandfathers(PMod pmod) {
     set<Person*> grandfathers;
     set<Person*> grandparents;
-    // if (pmod == PMod::MATERNAL) {
-    //     grandfathers.insert(mother()->father());
-    // } else if (pmod == PMod::PATERNAL) {
-    //     grandfathers.insert(father()->father());
-    // } else {
-    //     grandfathers.insert(mother()->father());
-    //     grandfathers.insert(father()->father());
-    // }
 
     grandparents = this->grandparents(pmod);
     for (Person *ptr : grandparents) {
@@ -147,15 +139,7 @@ set<Person*> Person::grandfathers(PMod pmod) {
 set<Person*> Person::grandmothers(PMod pmod) {
     set<Person*> grandmothers;
     set<Person*> grandparents;
-    // if (pmod == PMod::MATERNAL) {
-    //     grandmothers.insert(mother()->mother());
-    // } else if (pmod == PMod::PATERNAL) {
-    //     grandmothers.insert(father()->mother());
-    // } else {
-    //     grandmothers.insert(mother()->mother());
-    //     grandmothers.insert(father()->mother());
-    // }
-
+    
     grandparents = this->grandparents(pmod);
     for (Person *ptr : grandparents) {
         if (ptr->gender() == Gender::FEMALE) {
@@ -180,8 +164,6 @@ set<Person*> Person::grandparents(PMod pmod) {
             }
         }
     }
-    // grandparents.merge(grandfathers(pmod));
-    // grandparents.merge(grandmothers(pmod));
     
     return grandparents;
 }
@@ -266,7 +248,9 @@ set<Person*> Person::siblings(PMod pmod, SMod smod) {
 
     parents = this->parents(pmod);
     for (Person *parent : parents) {
-        siblings.merge(parent->children());
+        if (parent) {
+            siblings.merge(parent->children());
+        }
     }
 
     if (smod == SMod::FULL) {
