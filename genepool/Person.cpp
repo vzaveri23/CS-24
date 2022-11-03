@@ -172,9 +172,11 @@ set<Person*> Person::grandparents(PMod pmod) {
     
     parents = this->parents(pmod);
     for (Person *i : parents) {
-        for (Person *j : i->parents(PMod::ANY)) {
-            if (j) {
-                grandparents.insert(j);
+        if (i) {
+            for (Person *j : i->parents(PMod::ANY)) {
+                if (j) {
+                    grandparents.insert(j);
+                }
             }
         }
     }
