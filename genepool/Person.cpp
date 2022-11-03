@@ -204,8 +204,10 @@ set<Person*> Person::parents(PMod pmod) {
             parents.insert(father());
         }
     } else {
-        if (mother() && father()) {
+        if (mother()) {
             parents.insert(mother());
+        }
+        if (father()) {
             parents.insert(father());
         }
     }
