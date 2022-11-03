@@ -27,7 +27,14 @@ Person* Person::father() {
 }
 
 set<Person*> Person::ancestors(PMod pmod) {
-    return set<Person*>();
+    set<Person*> ancestors;
+
+    for (Person *ptr : parents(pmod)) {
+        ancestors.merge(ptr->ancestors());
+    }
+
+    ancestors.merge(parents(pmod));
+    return ancestors;
 }
 
 set<Person*> Person::aunts(PMod pmod, SMod smod) {
@@ -87,7 +94,13 @@ set<Person*> Person::daughters() {
 }
 
 set<Person*> Person::descendants() {
-    return set<Person*>();
+    set<Person*> descendants;
+    for (Person *ptr : children()) {
+        descendants.merge(ptr->descendants());
+    }
+
+    descendants.merge(children());
+    return descendants;
 }
 
 set<Person*> Person::grandchildren() {
