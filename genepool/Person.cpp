@@ -27,22 +27,18 @@ Person* Person::father() {
 }
 
 set<Person*> Person::ancestors(PMod pmod) {
-    return set<Person*>();
+    
 }
 
 set<Person*> Person::aunts(PMod pmod, SMod smod) {
     set<Person*> aunts;
+    set<Person*> parents;
+    parents = this->parents(pmod);
+    for (Person *ptr : parents) {
+        aunts.merge(ptr->sisters(PMod::ANY, smod));
+    }
 
-   if (pmod == PMod::MATERNAL) {
-    aunts = mother()->sisters(pmod, smod);
-   } else if (pmod == PMod::PATERNAL) {
-    aunts = father()->sisters(pmod, smod);
-   } else {
-    aunts.merge(mother()->sisters(pmod, smod));
-    aunts.merge(father()->sisters(pmod, smod));
-   }
-
-   return aunts;
+    return aunts;
 }
 
 set<Person*> Person::brothers(PMod pmod, SMod smod) {
@@ -66,23 +62,14 @@ set<Person*> Person::children() {
 
 set<Person*> Person::cousins(PMod pmod, SMod smod) {
     set<Person*> cousins;
-    set<Person*> siblings;
-    if (pmod == PMod::MATERNAL) {
-        siblings = mother()->siblings(pmod, smod);
-        for (Person *i : siblings) {
-            for (Person *j : i->children()) {
-                cousins.insert(j);
-            }
-        }
-    } else if (pmod == PMod::PATERNAL) {
-        siblings = father()->siblings(pmod, smod);
-        for (Person *i : siblings) {
-            for (Person *j : i->children()) {
-                cousins.insert(j);
-            }
-        }
-    } else {
+    set<Person*> uncles = this->uncles(pmod, smod);
+    set<Person*> aunts = this->aunts(pmod, smod);
+    for (Person *ptr : uncles) {
+        cousins.merge(ptr->children());
+    }
 
+    for (Person* ptr : aunts) {
+        cousins.merge(ptr->children());
     }
 
     return cousins;
@@ -188,9 +175,6 @@ set<Person*> Person::nephews(PMod pmod, SMod smod) {
 
     siblings = this->siblings(pmod, smod);
     for (Person *i : siblings) {
-        // for (Person *j : i->sons()) {
-        //     nephews.insert(j);
-        // }
         nephews.merge(i->sons());
     }
 
@@ -203,9 +187,6 @@ set<Person*> Person::nieces(PMod pmod, SMod smod) {
 
     siblings = this->siblings(pmod, smod);
     for (Person *i : siblings) {
-        // for (Person *j : i->daughters()) {
-        //     nieces.insert(j);
-        // }
         nieces.merge(i->daughters());
     }
 
@@ -215,12 +196,18 @@ set<Person*> Person::nieces(PMod pmod, SMod smod) {
 set<Person*> Person::parents(PMod pmod) {
     set<Person*> parents;
     if (pmod == PMod::MATERNAL) {
-        parents.insert(mother());
+        if (mother()) {
+            parents.insert(mother());
+        }
     } else if (pmod == PMod::PATERNAL) {
-        parents.insert(father());
+        if (father()) {
+            parents.insert(father());
+        }
     } else {
-        parents.insert(mother());
-        parents.insert(father());
+        if (mother() && father()) {
+            parents.insert(mother());
+            parents.insert(father());
+        }
     }
 
     return parents;
@@ -285,15 +272,11 @@ set<Person*> Person::sons() {
 
 set<Person*> Person::uncles(PMod pmod, SMod smod) {
     set<Person*> uncles;
-
-   if (pmod == PMod::MATERNAL) {
-    uncles = mother()->brothers(pmod, smod);
-   } else if (pmod == PMod::PATERNAL) {
-    uncles = father()->brothers(pmod, smod);
-   } else {
-    uncles.merge(mother()->brothers(pmod, smod));
-    uncles.merge(father()->brothers(pmod, smod));
-   }
+    set<Person*> parents;
+    parents = this->parents(pmod);
+    for (Person *ptr : parents) {
+        uncles.merge(ptr->brothers(PMod::ANY, smod));
+    }
 
    return uncles;
     
