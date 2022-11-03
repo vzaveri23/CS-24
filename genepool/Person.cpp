@@ -27,7 +27,7 @@ Person* Person::father() {
 }
 
 set<Person*> Person::ancestors(PMod pmod) {
-    
+    return set<Person*>();
 }
 
 set<Person*> Person::aunts(PMod pmod, SMod smod) {
