@@ -11,7 +11,13 @@ Heap::Heap(size_t capacity) {
 }
 
 Heap::Heap(const Heap &other) {
-
+    mCapacity = other.mCapacity;
+    mData = new Entry[mCapacity];
+    mCount = 0;
+    for (size_t i=0; i<other.count(); i++) {
+        mData[i] = other.mData[i];
+        mCount++;
+    }
 }
 
 Heap::Heap(Heap &&other) {
@@ -82,7 +88,11 @@ Heap::Entry Heap::pop() {
 }
 
 Heap::Entry Heap::pushpop(const std::string& value, float score) {
-    return mData[0];
+    if (count() == 0) {
+        throw overflow_error("invalid: empty");
+    }
+
+
 }
 
 void Heap::push(const std::string& value, float score) {
@@ -93,6 +103,7 @@ void Heap::push(const std::string& value, float score) {
     Entry e;
     e.value = value;
     e.score = score;
+    mData[count()-1] = e;
     mCount++;
     size_t i=count()-1;
     while (mData[(i-1)/2].score > mData[i].score) {
