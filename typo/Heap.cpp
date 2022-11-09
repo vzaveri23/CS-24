@@ -64,10 +64,11 @@ Heap::Entry Heap::pop() {
                 continue;
             }
         } else if (right < count() && mData[right].score < mData[left].score) {
-            if (mData[right].score < mData[i].score)
+            if (mData[right].score < mData[i].score) {
                 swap(mData, right, i);
                 i = right;
                 continue;
+            }
         } else if (right < count() && mData[left].score == mData[right].score) {
             if (mData[left].score < mData[i].score) {
                 swap(mData, left, i);
