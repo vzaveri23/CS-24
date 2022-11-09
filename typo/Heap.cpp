@@ -59,29 +59,23 @@ Heap::Entry Heap::pop() {
          left = i*2+1;
          right = i*2+2;
 
-        if (left > count()) {
+        if (left >= count()) {
             break;
         }
 
-        if (mData[left].score < mData[right].score) {
-            if (mData[left].score < mData[i].score) {
-                swap(mData, left, i);
-                i = left;
-                continue;
-            }
-        } else if (right < count() && mData[right].score < mData[left].score) {
+        if (right < count() && mData[right].score < mData[left].score) {
             if (mData[right].score < mData[i].score) {
                 swap(mData, right, i);
                 i = right;
                 continue;
             }
-        } else if (right < count() && mData[left].score == mData[right].score) {
-            if (mData[left].score < mData[i].score) {
-                swap(mData, left, i);
-                i = left;
-                continue;
-            }
+        } else if (mData[left].score < mData[i].score) {
+            swap(mData, left, i);
+            i = left;
+            continue;
         }
+
+        break;
     }
 
     return e;
@@ -89,7 +83,7 @@ Heap::Entry Heap::pop() {
 
 Heap::Entry Heap::pushpop(const std::string& value, float score) {
     if (count() == 0) {
-        throw overflow_error("invalid: empty");
+        throw underflow_error("invalid: empty");
     }
 
     Entry e = mData[0];
@@ -104,29 +98,23 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
          left = i*2+1;
          right = i*2+2;
 
-        if (left > count()) {
+        if (left >= count()) {
             break;
         }
 
-        if (mData[left].score < mData[right].score) {
-            if (mData[left].score < mData[i].score) {
-                swap(mData, left, i);
-                i = left;
-                continue;
-            }
-        } else if (right < count() && mData[right].score < mData[left].score) {
+        if (right < count() && mData[right].score < mData[left].score) {
             if (mData[right].score < mData[i].score) {
                 swap(mData, right, i);
                 i = right;
                 continue;
             }
-        } else if (right < count() && mData[left].score == mData[right].score) {
-            if (mData[left].score < mData[i].score) {
-                swap(mData, left, i);
-                i = left;
-                continue;
-            }
+        } else if (mData[left].score < mData[i].score) {
+            swap(mData, left, i);
+            i = left;
+            continue;
         }
+
+        break;
     }
 
     return e;
