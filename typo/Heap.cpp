@@ -128,7 +128,7 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
             }
         }
     }
-    
+
     return e;
 
 }
@@ -141,7 +141,7 @@ void Heap::push(const std::string& value, float score) {
     Entry e;
     e.value = value;
     e.score = score;
-    mData[count()-1] = e;
+    mData[count()] = e;
     mCount++;
     size_t i=count()-1;
     while (mData[(i-1)/2].score > mData[i].score) {
