@@ -81,8 +81,7 @@ Heap::Entry Heap::pop() {
 }
 
 Heap::Entry Heap::pushpop(const std::string& value, float score) {
-    Entry e = mData[0];
-    
+    return mData[0];
 }
 
 void Heap::push(const std::string& value, float score) {
