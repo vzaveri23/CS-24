@@ -92,6 +92,44 @@ Heap::Entry Heap::pushpop(const std::string& value, float score) {
         throw overflow_error("invalid: empty");
     }
 
+    Entry e = mData[0];
+    Entry en;
+    en.value = value;
+    en.score = score;
+    mData[0] = en;
+    size_t i=0;
+    size_t left, right;
+
+     while (true) {
+         left = i*2+1;
+         right = i*2+2;
+
+        if (left > count()) {
+            break;
+        }
+
+        if (mData[left].score < mData[right].score) {
+            if (mData[left].score < mData[i].score) {
+                swap(mData, left, i);
+                i = left;
+                continue;
+            }
+        } else if (right < count() && mData[right].score < mData[left].score) {
+            if (mData[right].score < mData[i].score) {
+                swap(mData, right, i);
+                i = right;
+                continue;
+            }
+        } else if (right < count() && mData[left].score == mData[right].score) {
+            if (mData[left].score < mData[i].score) {
+                swap(mData, left, i);
+                i = left;
+                continue;
+            }
+        }
+    }
+    
+    return e;
 
 }
 
