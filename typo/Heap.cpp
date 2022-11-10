@@ -23,6 +23,8 @@ Heap::Heap(const Heap &other) {
 Heap::Heap(Heap &&other) {
     mData = other.mData;
     other.mData = NULL;
+    mCapacity = other.mCapacity;
+    mCount = other.mCount;
 }
 
 Heap::~Heap() {
@@ -133,7 +135,7 @@ void Heap::push(const std::string& value, float score) {
     mData[count()] = e;
     mCount++;
     size_t i=count()-1;
-    while (mData[(i-1)/2].score > mData[i].score) {
+    while (i > 0 && mData[(i-1)/2].score > mData[i].score) {
         swap(mData, (i-1)/2, i);
         i = (i-1)/2;
     }
