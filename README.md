@@ -29,7 +29,7 @@ _Assignments are due before midnight Pacific Time._
 | [Setree](setree)   | October 23rd
 | [Polish](polish)   | October 30th
 | Name                 | Due
-|----------------------|-----
+|----------------------|---------------
 | [Welcome](welcome)   | October   2nd
 | [FibVec](fibvec)     | October   9th
 | [Assort](assort)     | October  16th
@@ -37,6 +37,7 @@ _Assignments are due before midnight Pacific Time._
 | [Polish](polish)     | October  30th
 | [GenePool](genepool) | November  6th
 | [Typo](typo)         | November 13th
+| [StarMap](starmap)   | November 20th
 
 
 ## Lectures
@@ -58,3 +59,5 @@ _12:30 to 13:45 Mondays and Wednesdays in IV Theater II_
 | October   31st | Random notes; efficient coding; sets and maps
 | November   2nd | More maps; iterators; hash tables
 | November   7th | More hash tables; heaps
+| November   9th | Amortized time; binary heaps; leftist heaps
+| November  14th | Challenge labs; disjoint sets
