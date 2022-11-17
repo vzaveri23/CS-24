@@ -1,4 +1,5 @@
 #include "Helpers.h"
+#include <algorithm>
 
 // Space to implement helper class member functions.
 bool sortX(Star, Star);
