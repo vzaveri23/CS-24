@@ -30,10 +30,11 @@ vector<Star> StarMap::find(size_t n, float x, float y, float z) {
   Heap heap(n);
   vector<Star> result;
   findHelp(kt->root, heap, ship);
-  for (size_t i=0; i<heap.count(); i++) {
+  for (size_t i=0; i<n; i++) {
     result.push_back(heap.pop().data);
   }
 
+  reverse(result.begin(), result.end());
   return result;
 
 }
