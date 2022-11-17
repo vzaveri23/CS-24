@@ -3,6 +3,8 @@
 #include <sstream>
 #include <cmath>
 #include <queue>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 void findHelp(KDTree::Node *, Heap, Star);
