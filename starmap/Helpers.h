@@ -20,6 +20,9 @@ class KDTree {
 
     Node *root;
     KDTree(istream &stream);
+    ~KDTree();
+    void clear();
+    void deleteNode(Node *);
     Node* makeTree(vector<Star> &, size_t, size_t, size_t);
 };
 
