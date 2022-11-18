@@ -23,6 +23,10 @@ KDTree::KDTree(istream &stream) {
     root = makeTree(stars, 0, stars.size(), 0);
 }
 
+KDTree::~KDTree() {
+    clear();
+}
+
 bool sortX(Star s1, Star s2) {
     return s1.x < s2.x;
 }
@@ -56,6 +60,26 @@ KDTree::Node* KDTree::makeTree(vector<Star> &stars, size_t start, size_t end, si
     ptr->axis = axis;
 
     return ptr;
+}
+
+void KDTree::clear() {
+    if (root == nullptr) {
+        return;
+    }
+
+    deleteNode(root);
+    root = nullptr;
+}
+
+void KDTree::deleteNode(Node *ptr) {
+    if (ptr == nullptr) {
+        return;
+    }
+
+    deleteNode(ptr->left);
+    deleteNode(ptr->right);
+
+    delete ptr;
 }
 
 void swap(Heap::Entry [], size_t, size_t);
