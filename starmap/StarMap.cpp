@@ -32,7 +32,7 @@ vector<Star> StarMap::find(size_t n, float x, float y, float z) {
   Heap heap(n);
   vector<Star> result;
   findHelp(kt->root, heap, ship);
-  for (size_t i=0; i<n; i++) {
+  while (heap.count() > 0) {
     result.push_back(heap.pop().data);
   }
 
@@ -46,13 +46,13 @@ void StarMap::findHelp(KDTree::Node *currentNode, Heap &heap, Star &ship) {
     return;
   }
 
-  if (!(heap.count() == heap.capacity())) {
+  if (heap.count() == heap.capacity()) {
+    if (distance(currentNode->data, ship) < heap.top().score) {
+      heap.pushpop(currentNode->data, distance(currentNode->data, ship));
+    }
+  } else {
     heap.push(currentNode->data, distance(currentNode->data, ship));
   }
-
-  if (heap.count() == heap.capacity() && distance(currentNode->data, ship) < heap.top().score) {
-    heap.pushpop(currentNode->data, distance(currentNode->data, ship));
-  } 
 
   if (currentNode->axis == 0) {
     if (ship.x < currentNode->data.x) {
@@ -99,8 +99,6 @@ void StarMap::findHelp(KDTree::Node *currentNode, Heap &heap, Star &ship) {
       }
     }
   }
-
-
 }
 
 float distance(Star s1, Star s2) {
