@@ -36,7 +36,7 @@ bool sortZ(Star s1, Star s2) {
 }
 
 KDTree::Node* KDTree::makeTree(vector<Star> &stars, size_t start, size_t end, size_t axis) {
-    if (end-start<2) {
+    if (end-start<1) {
         return nullptr;
     }
 
@@ -54,6 +54,7 @@ KDTree::Node* KDTree::makeTree(vector<Star> &stars, size_t start, size_t end, si
     ptr->left = makeTree(stars, start, (start+end)/2, (axis+1)%3);
     ptr->right = makeTree(stars, (start+end)/2 + 1, end, (axis+1)%3);
     ptr->axis = axis;
+    count++;
 
     return ptr;
 }
