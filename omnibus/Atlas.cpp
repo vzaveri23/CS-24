@@ -15,7 +15,8 @@ Atlas* Atlas::create(std::istream& stream) {
 
 Atlas::Atlas(istream &stream) {
   string line, t, station, numS, lineName;
-  int num, prevNum;
+  int num = 0;
+  int prevNum = 0;
   Station *prevStation;
   bool isTrain = false;
   while (getline(stream, line)) {
