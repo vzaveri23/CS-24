@@ -133,13 +133,10 @@ Trip Atlas::route(const string &src, const string &dst) {
   map<Station*, Edge*> visited;
   map<Station*, int> distances;
   priority_queue<Pair> heap;
-  // map<Station*, bool> ifVisited;
-  // vector<Station*> path;
-  // bool isBreak = false;
+  bool isBreak = false;
 
   for (auto [k, v] : graph) {
     distances[v] = INT_MAX;
-    visited[v] = nullptr;
   }
 
   Station *start = graph.at(src);
@@ -152,102 +149,113 @@ Trip Atlas::route(const string &src, const string &dst) {
 
   heap.push(p);
 
-  // while (heap.size() > 0) {
-  //   Station *top = heap.top().id;
-  //   heap.pop();
-  //   for (Edge *e : top->neighbors) {
-  //     if (e->src->name == dst) {
-  //       Station *end = graph.at(dst);
-  //       visited.insert({end, e});
-  //       isBreak = true;
-  //       break;
-  //     }
+  while (heap.size() > 0) {
+    Station *top = heap.top().id;
+    heap.pop();
+    for (Edge *e : top->neighbors) {
+      if (e->src->name == dst) {
+        Station *end = graph.at(dst);
+        Edge* temp = new Edge;
+        temp->src = e->dst;
+        visited.insert({end, temp});
+        isBreak = true;
+        break;
+      }
 
-  //     if (visited.find(e->src) == visited.end()) {
-  //       visited.insert({top, e});
+      if (visited.find(e->src) == visited.end()) {
+        visited.insert({top, e});
 
-  //       if (e->distance + distances.at(top) < distances.at(e->src)) {
-  //         distances[e->src] = e->distance + distances.at(top);
-  //         Pair p;
-  //         p.distance = e->distance + distances.at(top);
-  //         p.prev = top;
-  //         p.id = e->src;
-  //         heap.push(p);
-  //       }
+        if (e->distance + distances.at(top) < distances.at(e->src)) {
+          distances[e->src] = e->distance + distances.at(top);
+          Pair p;
+          p.distance = e->distance + distances.at(top);
+          p.prev = top;
+          p.id = e->src;
+          heap.push(p);
+        }
 
-  //     }
-  //   }
+      }
+    }
 
-  //   if (isBreak) {
-  //      break;
-  //   }
+    if (isBreak) {
+       break;
+    }
+  }
 
   // }
 
-  while (heap.size()>0) {
-    Station *top = heap.top().id;
-    heap.pop();
-    // int parentDistance = distances.at(top);
-    if (top->name == dst) {
-      break;
-    }
-    if (top || distances.at(top) != INT_MAX) {
-      for (Edge *e : top->neighbors) {
-        if(distances.at(top) + e->distance < distances.at(e->src))
-        {
-          distances[e->src] = distances.at(top) + e->distance;
-          visited[top] = e;
-          Pair p;
-          p.distance = distances.at(top) + e->distance;
-          p.id = e->src;
-          p.prev = top;
-          heap.push(p);
-        }
-      }
-    }
-  
-    // for (Edge *e : top->neighbors) {
-    //   if (visited.find(e->dst) == visited.end()) {
-    //     visited.insert({e->dst, e});
-    //     if (parentDistance + e->distance < distances.at(e->src)) {
-    //       distances[e->src] = parentDistance + e->distance;
-    //       Pair p;
-    //       p.distance = parentDistance + e->distance;
-    //       p.id = e->dst;
-    //       p.prev = top;
-    //       heap.push(p);
-    //     }
-    //   }
-    // }
+  // while (heap.size()>0) {
+  //   Station *top = heap.top().id;
+  //   heap.pop();
+  //   int parentDistance = distances.at(top);
+  //   // if (top || distances.at(top) != INT_MAX) {
+  //   //   for (Edge *e : top->neighbors) {
+  //   //     if (top->name == dst) {
+  //   //       visited.insert({top, e});
+  //   //       isBreak = true;
+  //   //       break;
+  //   //     }
+  //   //     if(distances.at(top) + e->distance < distances.at(e->src))
+  //   //     {
+  //   //       distances[e->src] = distances.at(top) + e->distance;
+  //   //       visited[top] = e;
+  //   //       Pair p;
+  //   //       p.distance = distances.at(top) + e->distance;
+  //   //       p.id = e->src;
+  //   //       p.prev = top;
+  //   //       heap.push(p);
+  //   //     }
+  //   //   }
 
-    // if (isBreak) {
-    //   break;
-    // }
-  }
+  //   for (Edge *e : top->neighbors) {
+  //     if (top->name == dst) {
+  //         visited.insert({top, e});
+  //         isBreak = true;
+  //         break;
+  //       }
 
-  for (auto [k, v] : visited) {
-    cout << k->name << ": " << v->src->name << endl;
-  }
+  //     if (visited.find(e->dst) == visited.end()) {
+  //       visited.insert({e->dst, e});
+  //       if (parentDistance + e->distance < distances.at(e->dst)) {
+  //         distances[e->src] = parentDistance + e->distance;
+  //         Pair p;
+  //         p.distance = parentDistance + e->distance;
+  //         p.id = e->dst;
+  //         p.prev = top;
+  //         heap.push(p);
+  //       }
+  //     }
+  //   }
+
+  //     if (isBreak) {
+  //       break;
+  //     }
+  //   }
+
+  // for (auto [k, v] : visited) {
+  //   cout << k->name << ": " << v->src->name << endl;
+  // }
 
 
   Trip trip;
-  // trip.start = src;
-  // auto itr = visited.at(graph.at(dst));
+  trip.start = src;
+  Station *current = graph.at(dst);
+  while (current->name != src) {
+    Edge *temp = visited.at(current);
+    Station *prev = temp->src;
+    Trip::Leg leg;
+    leg.line = temp->line;
+    leg.stop = prev->name;
+    trip.legs.push_back(leg);
+    current = prev;
+  }
 
-  // while (itr->src->name != src) {
-  //   Trip::Leg leg;
-  //   leg.line = itr->line;
-  //   leg.stop = itr->src->name;
-  //   trip.legs.push_back(leg);
-  //   itr = visited.at(graph.at(itr->src->name));
-  // }
 
+  if (trip.legs.size() == 0) {
+    throw runtime_error("No route.");
+  }
 
-  // if (trip.legs.size() == 0) {
-  //   throw runtime_error("No route.");
-  // }
-
-  // reverse(trip.legs.begin(), trip.legs.end());
+  reverse(trip.legs.begin(), trip.legs.end());
   return trip;
 }
 
