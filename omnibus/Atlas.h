@@ -3,8 +3,12 @@
 
 #include <istream>
 #include <string>
-
 #include "Trip.h"
+#include "Helpers.h"
+#include <set>
+#include <queue>
+#include <map>
+using namespace std;
 
 
 class Atlas {
@@ -14,7 +18,7 @@ public:
 
 private:
   // Member Variables
-
+  map<string, Station *> graph;
 public:
   // Constructor & Destructor
   Atlas(std::istream& stream);
