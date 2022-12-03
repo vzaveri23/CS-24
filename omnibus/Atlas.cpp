@@ -4,6 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
+#include <climits>
 using namespace std;
 
 Atlas* Atlas::create(std::istream& stream) {
