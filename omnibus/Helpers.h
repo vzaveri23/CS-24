@@ -26,8 +26,7 @@ struct Station {
 
 struct Pair {
     int distance;
-    Station *id;
-    Station *prev;
+    Edge *edge;
 
     bool operator < (const Pair& other) const {
         return this->distance > other.distance;
