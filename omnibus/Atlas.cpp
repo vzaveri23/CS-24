@@ -148,95 +148,61 @@ Trip Atlas::route(const string &src, const string &dst) {
 
   Pair p;
   p.distance = 0;
-  p.id = start;
-  p.prev = nullptr;
+  p.edge = nullptr;
 
   heap.push(p);
 
+  cout << visited.size() << endl;
+  
   while (heap.size() > 0) {
-    Station *top = heap.top().id;
+    Station *top;
+    Edge *edge;
+    if (heap.top().edge == nullptr) {
+      top = graph.at(src);
+      edge = nullptr;
+    } else {
+      top = heap.top().edge->src;
+      edge = heap.top().edge;
+    }
+
     heap.pop();
+    if (visited.find(top) != visited.end() ) {
+      continue;
+    } else {
+      cout << "Inserting: " << top->name << endl;
+      visited.insert({top, edge});
+      // distances.insert({top, edge->distance});
+    }
+      
     for (Edge *e : top->neighbors) {
       if (e->src->name == dst) {
-        Station *end = graph.at(dst);
-        Edge* temp = new Edge;
-        temp->src = e->dst;
-        visited.insert({end, temp});
+        cout << "Inserting destination: " << e->src->name << endl;
+        visited.insert({e->src, e});
         isBreak = true;
         break;
       }
+    
+      if (e->distance + distances.at(top) < distances.at(e->src)) {
+        distances[e->src] = e->distance + distances.at(top);
+        Pair p;
+        p.distance = e->distance + distances.at(top);
+        p.edge = e;
+        heap.push(p);
+      }
 
-      if (visited.find(e->src) == visited.end()) {
-        visited.insert({top, e});
+      }
 
-        if (e->distance + distances.at(top) < distances.at(e->src)) {
-          distances[e->src] = e->distance + distances.at(top);
-          Pair p;
-          p.distance = e->distance + distances.at(top);
-          p.prev = top;
-          p.id = e->src;
-          heap.push(p);
-        }
-
+      if (isBreak) {
+       break;
       }
     }
 
-    if (isBreak) {
-       break;
-    }
-  }
-
-  // }
-
-  // while (heap.size()>0) {
-  //   Station *top = heap.top().id;
-  //   heap.pop();
-  //   int parentDistance = distances.at(top);
-  //   // if (top || distances.at(top) != INT_MAX) {
-  //   //   for (Edge *e : top->neighbors) {
-  //   //     if (top->name == dst) {
-  //   //       visited.insert({top, e});
-  //   //       isBreak = true;
-  //   //       break;
-  //   //     }
-  //   //     if(distances.at(top) + e->distance < distances.at(e->src))
-  //   //     {
-  //   //       distances[e->src] = distances.at(top) + e->distance;
-  //   //       visited[top] = e;
-  //   //       Pair p;
-  //   //       p.distance = distances.at(top) + e->distance;
-  //   //       p.id = e->src;
-  //   //       p.prev = top;
-  //   //       heap.push(p);
-  //   //     }
-  //   //   }
-
-  //   for (Edge *e : top->neighbors) {
-  //     if (top->name == dst) {
-  //         visited.insert({top, e});
-  //         isBreak = true;
-  //         break;
-  //       }
-
-  //     if (visited.find(e->dst) == visited.end()) {
-  //       visited.insert({e->dst, e});
-  //       if (parentDistance + e->distance < distances.at(e->dst)) {
-  //         distances[e->src] = parentDistance + e->distance;
-  //         Pair p;
-  //         p.distance = parentDistance + e->distance;
-  //         p.id = e->dst;
-  //         p.prev = top;
-  //         heap.push(p);
-  //       }
-  //     }
-  //   }
-
-  //     if (isBreak) {
-  //       break;
-  //     }
-  //   }
+  cout << visited.size() << endl;
 
   // for (auto [k, v] : visited) {
+  //   if (v == nullptr) {
+  //     cout << k->name << endl;
+  //   }
   //   cout << k->name << ": " << v->src->name << endl;
   // }
 
@@ -245,15 +211,13 @@ Trip Atlas::route(const string &src, const string &dst) {
   trip.start = src;
   Station *current = graph.at(dst);
   while (current->name != src) {
-    Edge *temp = visited.at(current);
-    Station *prev = temp->src;
+    Station *prev = visited.at(current)->dst;
     Trip::Leg leg;
-    leg.line = temp->line;
+    leg.line = visited.at(current)->line;
     leg.stop = prev->name;
     trip.legs.push_back(leg);
     current = prev;
   }
-
 
   if (trip.legs.size() == 0) {
     throw runtime_error("No route.");
