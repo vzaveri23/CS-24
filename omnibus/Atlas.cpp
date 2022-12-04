@@ -126,6 +126,9 @@ Atlas::Atlas(istream &stream) {
 
 Atlas::~Atlas() {
   for (auto [k, v] : graph) {
+    for (Edge *e : v->neighbors) {
+      delete e;
+    }
     delete v;
   }
 }
