@@ -152,7 +152,7 @@ Trip Atlas::route(const string &src, const string &dst) {
 
   heap.push(p);
 
-  cout << visited.size() << endl;
+  // cout << visited.size() << endl;
   
   while (heap.size() > 0) {
     Station *top;
@@ -169,14 +169,14 @@ Trip Atlas::route(const string &src, const string &dst) {
     if (visited.find(top) != visited.end() ) {
       continue;
     } else {
-      cout << "Inserting: " << top->name << endl;
-      visited.insert({top, edge});
+      // cout << "Inserting: " << top->name << endl;
+        visited.insert({top, edge});
       // distances.insert({top, edge->distance});
     }
       
     for (Edge *e : top->neighbors) {
       if (e->src->name == dst) {
-        cout << "Inserting destination: " << e->src->name << endl;
+        // cout << "Inserting destination: " << e->src->name << endl;
         visited.insert({e->src, e});
         isBreak = true;
         break;
@@ -197,7 +197,7 @@ Trip Atlas::route(const string &src, const string &dst) {
       }
     }
 
-  cout << visited.size() << endl;
+  // cout << visited.size() << endl;
 
   // for (auto [k, v] : visited) {
   //   if (v == nullptr) {
