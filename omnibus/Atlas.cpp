@@ -115,15 +115,6 @@ Atlas::Atlas(istream &stream) {
       }
     }
   }
-
-  // for (auto [k, v] : graph) {
-  //   cout << k << ": ";
-  //   for (Edge *e:v->neighbors) {
-  //     cout << e->src->name << " ";
-  //   }
-
-  //   cout << endl;
-  // }
 }
 
 
@@ -141,6 +132,35 @@ Trip Atlas::route(const string &src, const string &dst) {
   map<Station*, int> distances;
   priority_queue<Pair> heap;
 
+  run_dijkstra(src, dst, visited, distances, heap);
+
+  Trip trip;
+  trip.start = src;
+  Station *current = graph.at(dst);
+  string prevLine = "";
+  while (current->name != src) {
+    Station *prev = visited.at(current)->dst;
+    Trip::Leg leg;
+    leg.line = visited.at(current)->line;
+    leg.stop = visited.at(current)->src->name;
+    if (leg.line != prevLine) {
+      trip.legs.push_back(leg);
+    }
+  
+    current = prev;
+    prevLine = leg.line;
+  }
+
+  if (trip.legs.size() == 0) {
+    throw runtime_error("No route.");
+  }
+
+  reverse(trip.legs.begin(), trip.legs.end());
+  return trip;
+}
+
+void Atlas::run_dijkstra(const string &src, const string &dst, map<Station*, Edge*> &visited, map<Station*, int> &distances
+, priority_queue<Pair> &heap) {
   for (auto [k, v] : graph) {
     distances[v] = INT_MAX;
   }
@@ -166,11 +186,7 @@ Trip Atlas::route(const string &src, const string &dst) {
     }
 
     heap.pop();
-    if (top->name == dst) {
-        visited.insert({top, edge});
-        break;
-     }
-     
+  
     if (visited.find(top) != visited.end()) {
       continue;
     } else {
@@ -193,24 +209,5 @@ Trip Atlas::route(const string &src, const string &dst) {
 
     }
   }
-
-  Trip trip;
-  trip.start = src;
-  Station *current = graph.at(dst);
-  while (current->name != src) {
-    Station *prev = visited.at(current)->dst;
-    Trip::Leg leg;
-    leg.line = visited.at(current)->line;
-    leg.stop = prev->name;
-    trip.legs.push_back(leg);
-    current = prev;
-  }
-
-  if (trip.legs.size() == 0) {
-    throw runtime_error("No route.");
-  }
-
-  reverse(trip.legs.begin(), trip.legs.end());
-  return trip;
 }
 
