@@ -30,7 +30,10 @@ Atlas::Atlas(istream &stream) {
     if (t == "BUS:" || t == "TRAIN:") {
       if (t == "TRAIN:") {
         isTrain = true;
+      } else {
+        isTrain = false;
       }
+
       iss >> ws;
       getline(iss, lineName);
       prevStation = nullptr;
@@ -137,7 +140,6 @@ Trip Atlas::route(const string &src, const string &dst) {
   map<Station*, Edge*> visited;
   map<Station*, int> distances;
   priority_queue<Pair> heap;
-  bool isBreak = false;
 
   for (auto [k, v] : graph) {
     distances[v] = INT_MAX;
@@ -151,10 +153,8 @@ Trip Atlas::route(const string &src, const string &dst) {
   p.edge = nullptr;
 
   heap.push(p);
-
-  // cout << visited.size() << endl;
   
-  while (heap.size() > 0) {
+  while (!heap.empty()) {
     Station *top;
     Edge *edge;
     if (heap.top().edge == nullptr) {
@@ -166,46 +166,33 @@ Trip Atlas::route(const string &src, const string &dst) {
     }
 
     heap.pop();
-    if (visited.find(top) != visited.end() ) {
+    if (top->name == dst) {
+        visited.insert({top, edge});
+        break;
+     }
+     
+    if (visited.find(top) != visited.end()) {
       continue;
     } else {
-      // cout << "Inserting: " << top->name << endl;
         visited.insert({top, edge});
-      // distances.insert({top, edge->distance});
     }
-      
+
+    if (top->name == dst) {
+      break;
+    }
+
     for (Edge *e : top->neighbors) {
-      if (e->src->name == dst) {
-        // cout << "Inserting destination: " << e->src->name << endl;
-        visited.insert({e->src, e});
-        isBreak = true;
-        break;
-      }
-    
       if (e->distance + distances.at(top) < distances.at(e->src)) {
         distances[e->src] = e->distance + distances.at(top);
         Pair p;
         p.distance = e->distance + distances.at(top);
         p.edge = e;
+
         heap.push(p);
       }
 
-      }
-
-      if (isBreak) {
-       break;
-      }
     }
-
-  // cout << visited.size() << endl;
-
-  // for (auto [k, v] : visited) {
-  //   if (v == nullptr) {
-  //     cout << k->name << endl;
-  //   }
-  //   cout << k->name << ": " << v->src->name << endl;
-  // }
-
+  }
 
   Trip trip;
   trip.start = src;
