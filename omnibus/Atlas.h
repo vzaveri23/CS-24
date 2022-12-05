@@ -26,6 +26,7 @@ public:
 
   // Required Member Function
   Trip route(const std::string& src, const std::string& dst);
+  void run_dijkstra(const string &, const string &, map<Station*, Edge*> &, map<Station*, int> &, priority_queue<Pair> &);
 };
 
 #endif
