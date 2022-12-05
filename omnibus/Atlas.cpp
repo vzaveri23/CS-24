@@ -139,6 +139,9 @@ Trip Atlas::route(const string &src, const string &dst) {
   Station *current = graph.at(dst);
   string prevLine = "";
   while (current->name != src) {
+    if (visited.find(current) == visited.end()) {
+      throw runtime_error("No route.");
+    }
     Station *prev = visited.at(current)->dst;
     Trip::Leg leg;
     leg.line = visited.at(current)->line;
